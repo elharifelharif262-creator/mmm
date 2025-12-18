@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مركز الحياة للتدريب</title>
+
+    <!-- أيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        /* إعدادات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* الحاوية الرئيسية */
+        .welcome-container {
+            width: 100%;
+            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الهيدر */
+        .header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            text-align: center;
+            padding: 40px 30px;
+            color: #fff;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* المحتوى */
+        .content {
+            display: flex;
+            min-height: 500px;
+        }
+
+        /* الشريط الجانبي */
+        .sidebar {
+            flex: 1;
+            background: #f5f7fa;
+            padding: 30px;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 1.05rem;
+        }
+
+        .features i {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* منطقة الترحيب */
+        .welcome-area {
+            flex: 2;
+            padding: 40px;
+            position: relative;
+        }
+
+        .welcome-area h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .welcome-area p {
+            color: #4a5568;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: #6a11cb;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* زر الانتقال */
+        .enter-btn {
+            margin-top: 10px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            color: #fff;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 18px rgba(106,17,203,0.35);
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(106,17,203,0.4);
+        }
+
+        /* الفوتر */
+        .footer {
+            background: #f8f9fa;
+            text-align: center;
+            padding: 18px;
+            font-size: 0.9rem;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* انتقال هادئ للخروج */
+        @keyframes softFadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
+        /* استجابة للجوال */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            .sidebar {
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+            }
+        }
+
+        /* تنسيقات صفحة "ماذا عنا" */
+        .about-content {
+            display: none;
+            padding: 40px;
+        }
+
+        .mission-vision {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .mission-vision {
+                flex-direction: column;
+            }
+        }
+
+        .mission, .vision {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-right: 5px solid #6a11cb;
+        }
+
+        .mission h3, .vision h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mission h3 i {
+            color: #6a11cb;
+        }
+
+        .vision h3 i {
+            color: #2575fc;
+        }
+
+        /* معرض الصور */
+        .gallery {
+            margin: 40px 0;
+        }
+
+        .gallery h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2d3748;
+            font-size: 1.8rem;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-card p {
+            padding: 15px;
+            background: #f8f9fa;
+            color: #4a5568;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        /* قسم القيم */
+        .values {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+
+        .values h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2d3748;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .value-item i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .value-item h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        /* قسم الجودة والتراخيص */
+        .licenses-section {
+            background: linear-gradient(135deg, #f0f4ff, #e6f0ff);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+            border: 2px solid #6a11cb;
+        }
+
+        /* قسم الساحة والثقافات */
+        .culture-section {
+            margin: 40px 0;
+        }
+
+        .culture-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .culture-content {
+                flex-direction: column;
+            }
+        }
+
+        .culture-image {
+            flex: 1;
+        }
+
+        .culture-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .culture-text {
+            flex: 1;
+        }
+
+        /* إحصائيات */
+        .stats-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        /* أزرار التنقل */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            color: #fff;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 18px rgba(106,17,203,0.35);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(106,17,203,0.4);
+        }
+
+        .nav-btn.back {
+            background: linear-gradient(135deg, #718096, #a0aec0);
+        }
+
+        /* توقيت الانتقال التلقائي */
+        .auto-timer {
+            text-align: center;
+            margin-top: 20px;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .timer-bar {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .timer-progress {
+            height: 100%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            width: 100%;
+            animation: countdown 8s linear forwards;
+        }
+
+        @keyframes countdown {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* زر العودة */
+        .back-to-home {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            background: rgba(106, 17, 203, 0.1);
+            border: none;
+            color: #6a11cb;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-to-home:hover {
+            background: rgba(106, 17, 203, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="welcome-container" id="container">
+
+    <!-- الهيدر -->
+    <div class="header">
+        <div class="logo-icon">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEl4JZrFmrvt1Aopjjwtxo4Dzl9EcQ14TPVg&s" alt="مركز الحياة للتدريب" style="width:70px;height:70px;object-fit:cover;border-radius:50%;border:2px solid #0d5c75;" />
+        </div>
+        <h1>مركز الحياة للتدريب</h1>
+        <p>Life Training Center</p>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content" id="mainContent">
+        
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            <ul class="features">
+                <li><i class="fas fa-brain"></i> تدريبات تطوير الذات والعقل</li>
+                <li><i class="fas fa-users"></i> مجموعات تدريب ودعم</li>
+                <li><i class="fas fa-chart-line"></i> متابعة التقدم الشخصي</li>
+                <li><i class="fas fa-award"></i> شهادات معتمدة</li>
+                <li><i class="fas fa-certificate"></i> مركز مرخص رسمياً</li>
+                <li><i class="fas fa-globe"></i> بيئة متعددة الثقافات</li>
+            </ul>
+        </aside>
+
+        <!-- منطقة الترحيب -->
+        <section class="welcome-area">
+            <h2>مرحبًا بك</h2>
+            <p>
+                في <span class="highlight">مركز الحياة للتدريب</span> نعمل على تمكين الأفراد
+                من تطوير مهاراتهم وبناء وعيهم الذاتي من خلال برامج تعليمية
+                قائمة على أسس علمية وتجارب عملية.
+            </p>
+            <p>
+                هذه الصفحة هي محطتك الأولى للتعرّف على رؤيتنا وبرامجنا
+                قبل الانتقال إلى <strong>التسجيل</strong> والانضمام إلينا.
+            </p>
+
+            <button class="enter-btn" id="enterBtn">
+                اكتشف المزيد عنا
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </section>
+
+    </div>
+
+    <!-- محتوى "ماذا عنا" (مخفي في البداية) -->
+    <div class="about-content" id="aboutContent">
+        
+        <button class="back-to-home" id="backToHomeBtn">
+            <i class="fas fa-arrow-right"></i> العودة
+        </button>
+        
+        <!-- المهمة والرؤية -->
+        <div class="mission-vision">
+            <div class="mission">
+                <h3><i class="fas fa-bullseye"></i> مهمتنا</h3>
+                <p>تمكين الأفراد من تحقيق إمكاناتهم الكاملة من خلال برامج تدريبية متكاملة تركز على تطوير المهارات الشخصية والمهنية، وتعزيز الوعي الذاتي، وبناء شخصيات قادرة على التأثير الإيجابي في مجتمعاتهم.</p>
+            </div>
+            
+            <div class="vision">
+                <h3><i class="fas fa-eye"></i> رؤيتنا</h3>
+                <p>أن نكون الوجهة الأولى في المنطقة للتدريب التطويري، وأن نساهم في بناء جيل واعٍ قادر على قيادة التغيير الإيجابي، من خلال تقديم تجارب تعليمية استثنائية تحقق التحول النوعي في حياة الأفراد.</p>
+            </div>
+        </div>
+
+        <!-- معرض الصور -->
+        <div class="gallery">
+            <h2><i class="fas fa-images"></i> صور من المركز</h2>
+            <div class="images-grid">
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="قاعات التدريب">
+                    <p>قاعات التدريب المجهزة بأحدث التقنيات</p>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="ورش العمل">
+                    <p>ورش عمل تفاعلية وتطبيق عملي</p>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="المدربين">
+                    <p>فريق من المدربين المعتمدين ذوي الخبرة</p>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="التخرج">
+                    <p>حفلات التخريج وتوزيع الشهادات</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- القيم الأساسية -->
+        <div class="values">
+            <h2>قيمنا الأساسية</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <i class="fas fa-heart"></i>
+                    <h4>التميز</h4>
+                    <p>نسعى للجودة في كل ما نقدمه</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-handshake"></i>
+                    <h4>النزاهة</h4>
+                    <p>نعمل بشفافية ومصداقية</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-users"></i>
+                    <h4>العمل الجماعي</h4>
+                    <p>نؤمن بقوة التعاون</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <h4>الابتكار</h4>
+                    <p>نطور حلولاً إبداعية</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الجودة والتراخيص -->
+        <div class="licenses-section">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2d3748; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <i class="fas fa-certificate" style="color: #6a11cb;"></i> الجودة والتراخيص
+            </h2>
+            
+            <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 30px;">
+                <div style="flex: 1;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px; border-right: 4px solid #6a11cb; padding-right: 10px;">
+                        مركز معتمد ومرخص
+                    </h3>
+                    <p style="color: #4a5568; line-height: 1.8; margin-bottom: 15px;">
+                        نحن في <strong>مركز الحياة للتدريب</strong> حاصلون على التراخيص الرسمية الكاملة من الجهات المعنية، مما يضمن تقديمنا لبرامج تدريبية معتمدة وذات جودة عالية.
+                    </p>
+                    <p style="color: #4a5568; line-height: 1.8;">
+                        حصل المركز على <span class="highlight" style="background: #6a11cb; color: white; padding: 2px 8px; border-radius: 4px;">تصنيف متقدم</span> في تقييم مراكز التدريب، مما يعكس التزامنا بمعايير الجودة العالمية.
+                    </p>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: inline-block;">
+                        <i class="fas fa-award" style="font-size: 4rem; background: linear-gradient(135deg, #6a11cb, #2575fc); -webkit-background-clip: text; color: transparent; margin-bottom: 10px;"></i>
+                        <h4 style="color: #2d3748; margin: 10px 0;">مركز مرخص رسمياً</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بطاقة إنجاز المركز 16 -->
+            <div style="background: white; padding: 25px; border-radius: 12px; margin-top: 20px; border-left: 5px solid #2575fc; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="background: linear-gradient(135deg, #2575fc, #6a11cb); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-trophy" style="color: white; font-size: 1.8rem;"></i>
+                    </div>
+                    <div>
+                        <h3 style="color: #2d3748; margin-bottom: 10px;">المركز 16 في التميز التدريبي</h3>
+                        <p style="color: #4a5568; line-height: 1.8;">
+                            تفخر <strong>مركز الحياة للتدريب</strong> بحصولها على <strong>المركز السادس عشر</strong> في تصنيف مراكز التدريب على مستوى المنطقة، وهو إنجاز يعكس التميز في تقديم الخدمات التدريبية والالتزام بأعلى معايير الجودة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- معايير الجودة -->
+            <div style="margin-top: 30px;">
+                <h3 style="color: #2d3748; margin-bottom: 20px; text-align: center;">معايير الجودة التي نلتزم بها</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                        <i class="fas fa-check-circle" style="color: #10b981; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p>برامج معتمدة من جهات دولية</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                        <i class="fas fa-check-circle" style="color: #10b981; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p>مدربون معتمدون ذوو خبرة</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                        <i class="fas fa-check-circle" style="color: #10b981; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p>مراجعة وتطوير مستمر للبرامج</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                        <i class="fas fa-check-circle" style="color: #10b981; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p>تقييم دوري لرضا المتدربين</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الساحة والثقافات -->
+        <div class="culture-section">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2d3748; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <i class="fas fa-globe-americas" style="color: #6a11cb;"></i> الساحة والثقافات
+            </h2>
+            
+            <div class="culture-content">
+                <div class="culture-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="الساحة والثقافات - مركز الحياة للتدريب">
+                </div>
+                <div class="culture-text">
+                    <h3 style="color: #2d3748; margin-bottom: 15px; border-right: 4px solid #2575fc; padding-right: 10px;">
+                        بيئة متعددة الثقافات
+                    </h3>
+                    <p style="color: #4a5568; line-height: 1.8; margin-bottom: 15px;">
+                        في <strong>مركز الحياة للتدريب</strong>، نؤمن بتنوع الثقافات والخبرات كقوة دافعة للإبداع والتميز. نسعى لخلق بيئة تدريبية غنية بالتعددية الثقافية، حيث يلتقي المشاركون من خلفيات متنوعة لتبادل المعارف والخبرات.
+                    </p>
+                    <p style="color: #4a5568; line-height: 1.8;">
+                        نقدم برامج تلبي احتياجات مختلف الثقافات والمجتمعات، مع الحفاظ على القيم الأساسية والأصالة، مما يجعل مركزنا ساحة حقيقية للتبادل الثقافي والتنمية البشرية الشاملة.
+                    </p>
+                    
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                        <div style="background: white; padding: 15px; border-radius: 8px; flex: 1; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                            <i class="fas fa-hands-helping" style="color: #6a11cb; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                            <p style="font-size: 0.9rem;">تبادل الخبرات بين الثقافات</p>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; flex: 1; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
+                            <i class="fas fa-comments" style="color: #2575fc; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                            <p style="font-size: 0.9rem;">حوارات ثقافية بناءة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات إضافية -->
+        <div class="stats-box">
+            <h3 style="color: #2d3748; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-chart-bar" style="color: #6a11cb;"></i> إحصائيات عنا
+            </h3>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; text-align: center;">
+                <div>
+                    <h4 style="color: #6a11cb; font-size: 2rem;">+5000</h4>
+                    <p>متدرب منذ التأسيس</p>
+                </div>
+                <div>
+                    <h4 style="color: #6a11cb; font-size: 2rem;">50+</h4>
+                    <p>برنامج تدريبي</p>
+                </div>
+                <div>
+                    <h4 style="color: #6a11cb; font-size: 2rem;">20+</h4>
+                    <p>مدرب معتمد</p>
+                </div>
+                <div>
+                    <h4 style="color: #6a11cb; font-size: 2rem;">95%</h4>
+                    <p>رضا المتدربين</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- أزرار التنقل -->
+        <div class="navigation-buttons">
+            <button class="nav-btn back" id="goBackBtn">
+                <i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية
+            </button>
+            
+            <button class="nav-btn" id="goToRegisterBtn">
+                المتابعة إلى التسجيل <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+
+        <!-- توقيت الانتقال التلقائي -->
+        <div class="auto-timer" id="autoTimer">
+            <p>سيتم تحويلك تلقائياً إلى صفحة التسجيل خلال <span id="countdown">8</span> ثوانٍ</p>
+            <div class="timer-bar">
+                <div class="timer-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <div class="footer">
+        © 2024 مركز الحياة للتدريب – جميع الحقوق محفوظة
+    </div>
+
+</div>
+
+<script>
+    const enterBtn = document.getElementById('enterBtn');
+    const container = document.getElementById('container');
+    const mainContent = document.getElementById('mainContent');
+    const aboutContent = document.getElementById('aboutContent');
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    const goBackBtn = document.getElementById('goBackBtn');
+    const goToRegisterBtn = document.getElementById('goToRegisterBtn');
+    const autoTimer = document.getElementById('autoTimer');
+    const countdownElement = document.getElementById('countdown');
+
+    let countdownInterval;
+
+    // الانتقال إلى صفحة "ماذا عنا"
+    function showAboutPage() {
+        mainContent.style.display = 'none';
+        aboutContent.style.display = 'block';
+        
+        // بدء العد التنازلي التلقائي
+        startCountdown();
+        
+        // إخفاء زر العودة في الصفحة الرئيسية
+        backToHomeBtn.style.display = 'flex';
+    }
+
+    // العودة إلى الصفحة الرئيسية
+    function showMainPage() {
+        aboutContent.style.display = 'none';
+        mainContent.style.display = 'flex';
+        
+        // إيقاف العد التنازلي
+        stopCountdown();
+    }
+
+    // الانتقال إلى التسجيل
+    function goToRegister() {
+        container.style.animation = 'softFadeOut 0.6s ease forwards';
+        setTimeout(() => {
+            window.location.href = 'project.html'; // صفحة التسجيل
+        }, 600);
+    }
+
+    // بدء العد التنازلي
+    function startCountdown() {
+        let countdown = 8;
+        countdownElement.textContent = countdown;
+        
+        countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                goToRegister();
+            }
+        }, 1000);
+    }
+
+    // إيقاف العد التنازلي
+    function stopCountdown() {
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+    }
+
+    // إلغاء العد التنازلي عند التفاعل
+    function resetTimer() {
+        stopCountdown();
+        autoTimer.style.display = 'none';
+    }
+
+    // أحداث الأزرار
+    enterBtn.addEventListener('click', showAboutPage);
+    backToHomeBtn.addEventListener('click', showMainPage);
+    goBackBtn.addEventListener('click', showMainPage);
+    goToRegisterBtn.addEventListener('click', goToRegister);
+
+    // إضافة أحداث التفاعل لإلغاء العد التنازلي
+    aboutContent.addEventListener('click', resetTimer);
+    aboutContent.addEventListener('mousemove', resetTimer);
+    aboutContent.addEventListener('keydown', resetTimer);
+
+    // الضغط على زر Enter للانتقال للتسجيل
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && aboutContent.style.display === 'block') {
+            goToRegister();
+        }
+    });
+
+    // عند تحميل الصفحة، إخفاء محتوى "ماذا عنا"
+    window.addEventListener('load', () => {
+        aboutContent.style.display = 'none';
+        mainContent.style.display = 'flex';
+    });
+</script>
+
+</body>
+</html>

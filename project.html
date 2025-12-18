@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مركز الحياة</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:Arial;
+    background:url('https://elakademiapost.com/wp-content/uploads/2024/12/2-17.webp')
+    no-repeat center center fixed;
+    background-size:cover;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:40px 15px;
+}
+.card{
+    width:360px;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:30px 25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+.logo-container{text-align:center;margin-bottom:25px}
+.logo-circle{
+    width:110px;height:110px;border-radius:50%;
+    background:linear-gradient(135deg,#1a6bc4,#0d4d8c);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 10px;
+    border:4px solid white;box-shadow:0 6px 15px rgba(0,0,0,.2);
+}
+.logo-circle img{width:85%;height:85%;border-radius:50%;background:white}
+.logo-title{font-size:24px;font-weight:bold;color:#0d4d8c}
+.logo-sub{font-size:16px;color:#1a6bc4}
+.form-group{margin-bottom:15px}
+label{display:block;margin-bottom:6px;font-weight:bold;color:#0d4d8c}
+input,select{width:100%;padding:12px 14px;border-radius:8px;border:2px solid #e1e8f0;font-size:15px;transition:.4s}
+input:focus,select:focus{outline:none;border-color:#1a6bc4;box-shadow:0 0 0 3px rgba(26,107,196,.15);transform:translateY(-2px)}
+button{width:100%;padding:13px;background:linear-gradient(135deg,#1a6bc4,#0d4d8c);color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;transition:.4s}
+button:hover{transform:translateY(-3px)}
+.hidden{opacity:0;transform:translateY(10px);pointer-events:none;max-height:0;overflow:hidden;transition:.5s}
+.visible{opacity:1;transform:translateY(0);max-height:700px;pointer-events:auto;transition:.5s}
+.msg{margin-top:10px;text-align:center;font-weight:bold}
+.success{color:green}
+.error{color:red}
+
+/* تصميم مجموعة كلمة المرور مع زر العين */
+.password-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.password-group input {
+    padding-right: 45px; /* مساحة لزر العين */
+}
+
+.toggle-password {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    width: auto;
+    padding: 0 8px;
+    font-size: 18px;
+}
+
+.toggle-password:hover {
+    color: #1a6bc4;
+    background: none;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* تصميم المعلومات التوضيحية */
+.info-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.name-requirement {
+    font-size: 13px;
+    color: #ff9800;
+    margin-top: 4px;
+    text-align: right;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<div class="logo-container">
+    <div class="logo-circle">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEl4JZrFmrvt1Aopjjwtxo4Dzl9EcQ14TPVg&s">
+    </div>
+    <div class="logo-title">مركز الحياة</div>
+    <div class="logo-sub">تسجيل الدخول</div>
+</div>
+
+<div class="form-group">
+<label>نوع المستخدم</label>
+<select id="userType">
+    <option value="">-- اختر --</option>
+    <option value="student">طالب</option>
+    <option value="employee">موظف</option>
+    <option value="admin">أدمن</option>
+</select>
+</div>
+
+<div id="studentFields" class="hidden">
+    <div class="form-group">
+        <label>اسم الطالب الثلاثي</label>
+        <input id="studentName" placeholder="مثال: أحمد محمد علي">
+        <div class="name-requirement">* يجب إدخال الاسم الثلاثي كاملاً (الاسم + الأب + الجد)</div>
+    </div>
+    
+    <div class="form-group">
+        <label>كود الطالب</label>
+        <input id="studentCode" placeholder="مثال: STU2024A">
+        <div class="info-text">يجب ألا يقل عن 7 حروف/أرقام</div>
+    </div>
+    
+    <div class="password-group">
+        <label>الرقم السري</label>
+        <input id="studentPass" type="password" placeholder="أدخل الرقم السري">
+        <button type="button" class="toggle-password" onclick="togglePassword('studentPass')">👁️</button>
+        <div class="info-text">اضغط على العين 👁️ لإظهار/إخفاء الرقم السري</div>
+    </div>
+    
+    <div class="form-group">
+        <label>التخصص</label>
+        <select id="studentSpec">
+            <option value="">-- اختر التخصص --</option>
+            <option>مساعد خدمات صحية</option>
+            <option>تكنولوجيا ومعلومات</option>
+            <option>مساحة وخرائط</option>
+        </select>
+    </div>
+    
+    <button onclick="studentLogin()">تسجيل / دخول</button>
+</div>
+
+<div id="employeeFields" class="hidden">
+    <div class="password-group">
+        <label>الرقم السري للموظف</label>
+        <input id="empCode" type="password" placeholder="أدخل الرقم السري">
+        <button type="button" class="toggle-password" onclick="togglePassword('empCode')">👁️</button>
+        <div class="info-text">كود الموظف الافتراضي: EMP123</div>
+    </div>
+    <button onclick="employeeLogin()">دخول موظف</button>
+</div>
+
+<div id="adminFields" class="hidden">
+    <div class="form-group">
+        <label>اسم الأدمن</label>
+        <input id="adminName" placeholder="أدخل اسم الأدمن">
+    </div>
+    
+    <div class="password-group">
+        <label>الرقم السري</label>
+        <input id="adminCode" type="password" placeholder="أدخل الرقم السري">
+        <button type="button" class="toggle-password" onclick="togglePassword('adminCode')">👁️</button>
+        <div class="info-text">الرقم السري الافتراضي: 0000</div>
+    </div>
+    
+    <button onclick="adminLogin()">دخول أدمن</button>
+</div>
+
+<div id="message" class="msg"></div>
+</div>
+
+<script>
+const userType=document.getElementById("userType");
+const student=document.getElementById("studentFields");
+const employee=document.getElementById("employeeFields");
+const admin=document.getElementById("adminFields");
+const msg=document.getElementById("message");
+
+// وظيفة إظهار/إخفاء كلمة المرور
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const button = event.currentTarget;
+    
+    if (input.type === "password") {
+        input.type = "text";
+        button.textContent = "🙈";
+        button.style.color = "#1a6bc4";
+    } else {
+        input.type = "password";
+        button.textContent = "👁️";
+        button.style.color = "#666";
+    }
+}
+
+userType.onchange=()=>{
+    student.className="hidden";
+    employee.className="hidden";
+    admin.className="hidden";
+    msg.textContent="";
+    if(userType.value==="student") student.className="visible";
+    if(userType.value==="employee") employee.className="visible";
+    if(userType.value==="admin") admin.className="visible";
+};
+
+/* ===== الطالب ===== */
+function studentLogin(){
+    const name = studentName.value.trim();
+    const code = studentCode.value.trim();
+    const pass = studentPass.value;
+    const spec = studentSpec.value;
+    const codeRegex = /^[A-Za-z0-9]{7,}$/;
+
+    // التحقق من الحقول الفارغة
+    if(!name || !code || !pass || !spec){
+        show("جميع الحقول مطلوبة ❌","error"); 
+        return;
+    }
+    
+    // التحقق من الاسم الثلاثي
+    const nameParts = name.split(" ").filter(part => part.trim() !== "");
+    if(nameParts.length < 3){
+        show("يجب إدخال الاسم الثلاثي كاملاً (الاسم + الأب + الجد) ❌","error");
+        studentName.focus();
+        return;
+    }
+    
+    // التحقق من كود الطالب
+    if(!codeRegex.test(code)){
+        show("كود الطالب يجب ألا يقل عن 7 حروف ويحتوي على حروف إنجليزي وأرقام فقط ❌","error");
+        return;
+    }
+
+    // حفظ بيانات الطالب في localStorage
+    localStorage.setItem("userType","student");
+    localStorage.setItem("studentName",name);
+    localStorage.setItem("studentCode",code);
+    localStorage.setItem("studentPass",pass);
+    localStorage.setItem("studentSpec",spec);
+
+    // إظهار رسالة نجاح
+    show("✅ تم تسجيل الدخول بنجاح! يتم التوجيه...", "success");
+    
+    // الانتقال للصفحة الرئيسية بعد تأخير بسيط
+    setTimeout(() => {
+        window.location.replace("home.html");
+    }, 1500);
+}
+
+/* ===== الموظف ===== */
+function employeeLogin(){
+    const empPass = empCode.value;
+    
+    if(!empPass){
+        show("الرجاء إدخال الرقم السري ❌","error");
+        return;
+    }
+    
+    if(empPass==="EMP123"){
+        localStorage.setItem("userType","employee");
+        localStorage.setItem("employeeCode","EMP123");
+        
+        show("✅ تم دخول الموظف بنجاح!", "success");
+        
+        setTimeout(() => {
+            window.location.replace("home.html");
+        }, 1000);
+    }else{
+        show("الرقم السري غير صحيح ❌","error");
+        empCode.focus();
+    }
+}
+
+/* ===== الأدمن ===== */
+function adminLogin(){
+    const adminUser = adminName.value.trim();
+    const adminPass = adminCode.value;
+    
+    if(!adminUser || !adminPass){
+        show("جميع الحقول مطلوبة ❌","error");
+        return;
+    }
+    
+    if(adminUser==="admin" && adminPass==="0000"){
+        localStorage.setItem("userType","admin");
+        localStorage.setItem("adminName","admin");
+        
+        show("✅ تم دخول الأدمن بنجاح!", "success");
+        
+        setTimeout(() => {
+            window.location.replace("home.html");
+        }, 1000);
+    }else{
+        show("اسم المستخدم أو الرقم السري غير صحيح ❌","error");
+        adminName.focus();
+    }
+}
+
+function show(t,c){
+    msg.textContent=t;
+    msg.className="msg "+c;
+}
+
+// تسجيل دخول تلقائي عند فتح الموقع
+window.onload = ()=>{
+    const type = localStorage.getItem("userType");
+    if(type){
+        window.location.replace("home.html");
+    }
+};
+
+// تفعيل زر Enter
+document.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        const currentType = userType.value;
+        if(currentType === "student") studentLogin();
+        else if(currentType === "employee") employeeLogin();
+        else if(currentType === "admin") adminLogin();
+    }
+});
+</script>
+</body>
+</html>
